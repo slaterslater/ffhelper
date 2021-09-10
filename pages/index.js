@@ -2,18 +2,26 @@ import Head from 'next/head'
 import useSWR from 'swr'
 import Headlines from '../components/Headlines';
 import Footer from '../components/Footer';
+import styled from 'styled-components';
 
 export default function Home() {
 
+  const CenterDiv = styled.div`
+    font-family: Helvetica, sans-serif;
+    font-size: 16px;
+    color: black;
+    text-align: center;
+    margin: 50px auto;
+  `
 
-function PlayerNews() {
-  const fetcher = (url) => fetch(url).then((r) => r.json())
-  const API = process.env.NEXT_PUBLIC_API
-  const { data: news, error } = useSWR(API, fetcher)
-  if (error) return <div>failed to load from {API}</div>
-  if (!news) return <div>loading...</div>
-  return <Headlines data={news} />
-}
+  const PlayerNews = () => {
+    const fetcher = (url) => fetch(url).then((r) => r.json())
+    const API = process.env.NEXT_PUBLIC_API
+    const { data: news, error } = useSWR(API, fetcher)
+    if (error) return <CenterDiv>failed to load...</CenterDiv>
+    if (!news) return <CenterDiv>loading headlines...</CenterDiv>
+    return <Headlines data={news} />
+  }
 
   return (
     <div>
@@ -23,7 +31,7 @@ function PlayerNews() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1 style={{position:'absolute', left:'-999em'}}>NFL Headlines</h1>
+        <h1 style={{position:'absolute', left:'-999em'}}>Football Headlines</h1>
         <PlayerNews />
       </main>
       <Footer />

@@ -30,7 +30,13 @@ const HeadlineStyles = styled.div`
       font-size: 16px;
     } 
     div {
-      padding-left:10px;
+      padding-left: 10px;
+      margin-left: -15px;
+      background-color: #F7F7F7;
+      height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
   }
   img {
@@ -48,6 +54,10 @@ const HeadlineStyles = styled.div`
     }
     #player-profile h3 {
       font-size: 13px;
+    }
+    #player-profile div {
+      height: 65px;
+      margin-left: -10px;
     }
     font-size: 15px;
   }
