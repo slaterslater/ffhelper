@@ -8,8 +8,9 @@ export default function Home() {
 
 function PlayerNews() {
   const fetcher = (url) => fetch(url).then((r) => r.json())
-  const { data: news, error } = useSWR(process.env.NEXT_PUBLIC_API, fetcher)
-  if (error) return <div>failed to load</div>
+  const API = process.env.NEXT_PUBLIC_API
+  const { data: news, error } = useSWR(API, fetcher)
+  if (error) return <div>failed to load from {API}</div>
   if (!news) return <div>loading...</div>
   return <Headlines data={news} />
 }
