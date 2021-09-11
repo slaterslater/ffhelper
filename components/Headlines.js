@@ -90,7 +90,7 @@ font-style: italic;
 
 
 export default function Headlines({data}) {
-  // console.log(data)
+  console.log(data)
   return (
     <>
     {data.data.map(item => {
@@ -98,11 +98,13 @@ export default function Headlines({data}) {
       // player
       const player_id = item.relationships.player.data.id
       const player_data = data.included.find(player => player.id == player_id)
-      const player_image_id = player_data.relationships.image.data.id
+      const player_image_id = player_data.relationships.image.data?.id || null
       const position_id = player_data.relationships.position.data.id
       const player_name = player_data.attributes.name
       // image
-      const player_image_url = data.included.find(image => image.id == player_image_id).attributes.uri.url
+      const player_image_url = player_image_id 
+        ? data.included.find(image => image.id == player_image_id).attributes.uri.url 
+        : process.env.NEXT_PUBLIC_DEFAULT_PLAYER
       // team
       const team_id = item.relationships.team.data.id
       const team_data = data.included.find(team => team.id == team_id)
