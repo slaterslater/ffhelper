@@ -7,7 +7,7 @@ const HeadlineStyles = styled.div`
   border-top: 2px solid black;
   max-width: 650px;
   margin:0 auto;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
   font-family: Helvetica, sans-serif;
   font-size: 16px;
   color: #3c4043;
@@ -70,6 +70,7 @@ line-height: 1.35;
 /* margin-top: 15px; */
 p {
   margin-bottom: 0;
+  margin-top: 10px;
 }
 .title {
   font-weight: 550;
@@ -121,7 +122,7 @@ export default function Headlines({data}) {
         <ContentSyles>
           <div className="title">{parse(title.processed)}</div>
           <div className="content">{content && parse(content.processed)}</div>
-          <div className="date">{dayjs(date).format('MMM DD, h:mm A')}</div>
+          {/* <div className="date">{dayjs(date).format('MMM DD, h:mm A')}</div> */}
         </ContentSyles>
       )
 
