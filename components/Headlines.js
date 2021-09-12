@@ -1,5 +1,5 @@
 import parse from 'html-react-parser';
-import dayjs from 'dayjs';
+// import dayjs from 'dayjs';
 import styled from 'styled-components';
 import "@fontsource/inter";
 
@@ -67,7 +67,6 @@ const ContentSyles = styled.div`
 display: flex;
 flex-direction: column;
 line-height: 1.35;
-/* margin-top: 15px; */
 p {
   margin-bottom: 0;
   margin-top: 10px;
@@ -79,16 +78,12 @@ p {
   /* text-align:justify; */
 }
 .date {
-/* margin-left: auto;
-margin-top: 8px; */
-/* margin: 8px 3px 0 auto; */
 margin-top:2px;
 font-size: 13px;
 font-weight: 550;
 font-style: italic;
 }
 `
-
 
 export default function Headlines({data}) {
   console.log(data)
@@ -127,8 +122,8 @@ export default function Headlines({data}) {
       )
 
       return (
-        <HeadlineStyles key={item.id} style={{ borderColor: '#' + team_color }}>
-          <div id="player-profile">
+        <HeadlineStyles key={item.id}>
+          <div id="player-profile" style={{ borderColor: '#' + team_color }}>
             <Img cname="logo" src={team_image_url} alt={`${team_name} logo`} />
             <div>
               <h2>{player_name}</h2>
@@ -139,8 +134,7 @@ export default function Headlines({data}) {
           <Content title={title} content={analysis} date={changed} />
         </HeadlineStyles>
       )
-    }
-    )}
+    })}
     </>
   )
 }
