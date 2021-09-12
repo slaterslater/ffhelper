@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import "@fontsource/inter";
 
 const HeadlineStyles = styled.div`
-  border-top: 2px solid black;
   max-width: 650px;
   margin:0 auto;
   margin-bottom: 25px;
@@ -12,6 +11,7 @@ const HeadlineStyles = styled.div`
   font-size: 16px;
   color: #3c4043;
   #player-profile {
+    border-top: 2px solid black;
     background-color: #F7F7F7;
     display: flex;
     justify-content: flex-start;
@@ -111,8 +111,9 @@ export default function Headlines({data}) {
       // position
       const position_abbr = data.included.find(position => position.id == position_id).attributes.abbreviation
       // console.log({team_data})
-
-      const Img = ({src: url, desc, cname}) => <img src={process.env.NEXT_PUBLIC_EXTERNAL_SRC + url} alt={desc} className={cname} />
+      const Img = ({src: url, desc, cname}) => (
+        <img src={process.env.NEXT_PUBLIC_EXTERNAL_SRC + url} alt={desc} className={cname} />
+      )
       const Content = ({title, content, date}) => (
         <ContentSyles>
           <div className="title">{parse(title.processed)}</div>
