@@ -24,6 +24,14 @@ html, body, #next {
     font-weight: 550;
     font-size: 16px;
   }
+  .attention {
+      margin: 0 auto;
+      width: 350px;
+      padding-top: 150px;
+      text-align:center;
+      font-size: 16;
+      /* font-weight: bold; */
+    }
   @media (max-width:450px){
     font-size: 15px;
     h2 {
@@ -31,13 +39,6 @@ html, body, #next {
     }
     h3 {
       font-size: 13px;
-    }
-    .attention {
-      margin: 0 auto;
-      padding-top: 150px;
-      text-align:center;
-      font-size: 16;
-      font-weight: bold;
     }
   } 
 }
