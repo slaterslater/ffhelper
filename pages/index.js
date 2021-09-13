@@ -25,7 +25,6 @@ export default function Home() {
       <main style={{padding:'5px'}}>
         <h1 style={{position:'absolute', left:'-999em'}}>Football Headlines</h1>
         <PlayerNews />
-        <p className='attention'>testing loading message...</p>
       </main>
       <Footer />
     </div>

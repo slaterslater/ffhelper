@@ -64,7 +64,8 @@ const PositionNav = styled.nav`
 `
 
 export default function Rankings() {
-  
+  // need to determine how to update state once / set multiple state and rerender once/batch
+  // const [week, setWeek] = useState('')
   const [rankings, setRankings] = useState([])
   const positions = [
     'quarterbacks',
