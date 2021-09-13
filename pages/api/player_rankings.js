@@ -1,10 +1,4 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
-export default async (req, res) => {
-  // const qb_url = 'https://www.si.com/fantasy/2021/09/08/week-1-rankings-quarterbacks'
-  // const response = await fetch(qb_url)
-  // const htmlString = await response.text()
-  
+export default async (req, res) => {  
   if (req.method === 'POST') {
     const urls = req.body.urls
     try {
@@ -16,11 +10,10 @@ export default async (req, res) => {
         results.push(ranking)
       }
       Promise.all(urls.map(url => scrape(url)))
-        .then(() => { res.status(200).json({ rankings: results })
+        .then(() => { res.status(200).json({ results })
       });
     } catch (e) {
       res.status(400).json({ error: `could not fetch data...` })
     }
   }
-
 }
