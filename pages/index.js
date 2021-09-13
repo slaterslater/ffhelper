@@ -6,20 +6,12 @@ import styled from 'styled-components';
 
 export default function Home() {
 
-  const CenterDiv = styled.div`
-    font-family: Helvetica, sans-serif;
-    font-size: 16px;
-    color: black;
-    text-align: center;
-    margin: 50px auto;
-  `
-
   const PlayerNews = () => {
     const fetcher = (url) => fetch(url).then((r) => r.json())
     const API = process.env.NEXT_PUBLIC_API
     const { data: news, error } = useSWR(API, fetcher)
-    if (error) return <CenterDiv>failed to load...</CenterDiv>
-    if (!news) return <CenterDiv>loading headlines...</CenterDiv>
+    if (error) return <p className='attention'>failed to load...</p>
+    if (!news) return <p className='attention'>loading headlines...</p>
     return <Headlines data={news} />
   }
 
@@ -33,6 +25,7 @@ export default function Home() {
       <main style={{padding:'5px'}}>
         <h1 style={{position:'absolute', left:'-999em'}}>Football Headlines</h1>
         <PlayerNews />
+        <p className='attention'>testing loading message...</p>
       </main>
       <Footer />
     </div>

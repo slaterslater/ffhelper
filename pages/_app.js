@@ -1,10 +1,16 @@
 import { createGlobalStyle } from "styled-components"
 
 const GlobalStyle = createGlobalStyle`
-body{
+:root {
+  --default: #3c4043;
+  --litegrey: #F7F7F7;
+  --grey: #ececec;
+}
+html, body, #next {
   font-family: Helvetica, sans-serif;
   font-size: 16px;
-  color: #3c4043;
+  color: var(--default);
+  background-color: var(--litegrey);
   h2, h3 {
     margin: 0;
     padding: 0;
@@ -25,6 +31,13 @@ body{
     }
     h3 {
       font-size: 13px;
+    }
+    .attention {
+      margin: 0 auto;
+      padding-top: 150px;
+      text-align:center;
+      font-size: 16;
+      font-weight: bold;
     }
   } 
 }

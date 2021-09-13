@@ -2,19 +2,78 @@ import { useEffect, useState } from "react"
 import parse from 'html-react-parser';
 import dayjs from "dayjs"
 import weekOfYear from 'dayjs/plugin/weekOfYear'
+import styled from "styled-components";
 dayjs.extend(weekOfYear)
+
+const RankingPageStyles = styled.div`
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1130px;
+  margin: 0 auto;
+`
+
+const PositionStyles = styled.div`
+  width: 350px;
+  h3 {
+    margin-top: 15px;
+  }
+  ol {
+    background-color: white;
+    border: 1px solid lightslategray;
+    border-radius: 8px;
+    padding: 15px 0 15px 40px;
+    box-shadow: 5px 10px 18px #888888;
+  }
+  li {
+    padding: 2px 0 2px 5px;
+  }
+  li:nth-child(odd){
+    background-color: lightgrey;
+    /* color: white; */
+    ::marker {
+      /* color: var(--default); */
+    }
+  }
+  li::marker {
+    font-weight: bold;
+  }
+  li:nth-of-type(1n+51) {
+    display: none;
+} 
+`
+
+const PositionNav = styled.nav`
+  width:100%;
+  ul {
+    display: flex;
+    justify-content: space-evenly;
+    margin:0;
+    padding:0;
+    list-style-type: none;
+    
+  }
+  li {
+
+  }
+  a {
+    color: var(--default);
+    text-decoration: none;
+  }
+
+`
 
 export default function Rankings() {
   
   const [rankings, setRankings] = useState([])
   const positions = [
     'quarterbacks',
-    'running-backs',
-    'wide-receivers',
     'tight-ends',
     'defenses',
+    'running-backs',
+    'wide-receivers',
     'flex',
-    'kickers',
+    // 'kickers',
   ]
   const heading = text => text.replace('-',' ').toUpperCase()
 
@@ -41,28 +100,27 @@ export default function Rankings() {
   },[])
 
   return (
-    <>
-      <nav>
+    <RankingPageStyles>
+      {/* <PositionNav>
         <ul>
           {positions.map(position => (
             <li key={'nav' + position}><a href={'#' + position}>{heading(position)}</a></li>
           ))}
         </ul>
-      </nav>
+      </PositionNav> */}
       {rankings.results 
         ? positions.map(position => {
-            const html = rankings.results.find(ranking => (
-              ranking[0].includes(heading(position))
-              // ranking[0].includes(position.replace('-',' ').toUpperCase())
-            ))
-            return (
-              <div id={position} key={'ranking-' + position}>
-                {parse(html[0])}
-                {parse(html[1])}
-              </div>
+          const html = rankings.results.find(ranking => (
+            ranking[0].includes(heading(position))
+          ))
+          return (
+            <PositionStyles id={position} key={'ranking-' + position}>
+              {parse(html[0])}
+              {parse(html[1])}
+            </PositionStyles>
           )}) 
-      : <p>loading player rankings...</p>
+      : <p className='attention'>loading player rankings...</p>
       }
-    </>
+    </RankingPageStyles>
   )
 }

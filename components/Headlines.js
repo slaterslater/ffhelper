@@ -8,14 +8,14 @@ const HeadlineStyles = styled.div`
   margin-bottom: 25px;
   #player-profile {
     border-top: 2px solid black;
-    background-color: #F7F7F7;
+    background-color: var(--grey);
     display: flex;
     justify-content: flex-start;
     align-items: center;
     div {
       padding-left: 10px;
       margin-left: -15px;
-      background-color: #F7F7F7;
+      background-color:var(--grey);
       height: 100px;
       display: flex;
       flex-direction: column;
