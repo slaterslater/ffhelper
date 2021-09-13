@@ -1,9 +1,6 @@
 import styled from "styled-components"
 
 const FooterStyles = styled.footer`
-  font-family: Helvetica, sans-serif;
-  font-size: 16px;
-  color: #3c4043;
   text-align:center;
   /* border-top: 2px solid grey; */
 `

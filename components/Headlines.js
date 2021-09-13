@@ -1,5 +1,4 @@
 import parse from 'html-react-parser';
-// import dayjs from 'dayjs';
 import styled from 'styled-components';
 import "@fontsource/inter";
 
@@ -7,28 +6,12 @@ const HeadlineStyles = styled.div`
   max-width: 650px;
   margin:0 auto;
   margin-bottom: 25px;
-  font-family: Helvetica, sans-serif;
-  font-size: 16px;
-  color: #3c4043;
   #player-profile {
     border-top: 2px solid black;
     background-color: #F7F7F7;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    h2, h3 {
-      margin: 0;
-      padding: 0;
-      text-transform: uppercase;
-    } 
-    h2 {
-      font-weight: 600;
-      font-size: 20px;
-    }
-    h3 {
-      font-weight: 550;
-      font-size: 16px;
-    } 
     div {
       padding-left: 10px;
       margin-left: -15px;
@@ -49,40 +32,33 @@ const HeadlineStyles = styled.div`
     img {
       height: 65px;
     }
-    #player-profile h2 {
-      font-size: 16px;
-    }
-    #player-profile h3 {
-      font-size: 13px;
-    }
     #player-profile div {
       height: 65px;
       margin-left: -10px;
     }
-    font-size: 15px;
   }
 `
 
 const ContentSyles = styled.div`
-display: flex;
-flex-direction: column;
-line-height: 1.35;
-p {
-  margin-bottom: 0;
-  margin-top: 10px;
-}
-.title {
-  font-weight: 550;
-}
-.content {
-  /* text-align:justify; */
-}
-.date {
-margin-top:2px;
-font-size: 13px;
-font-weight: 550;
-font-style: italic;
-}
+  display: flex;
+  flex-direction: column;
+  line-height: 1.35;
+  p {
+    margin-bottom: 0;
+    margin-top: 10px;
+  }
+  .title {
+    font-weight: 550;
+  }
+  .content {
+    /* text-align:justify; */
+  }
+  .date {
+    margin-top:2px;
+    font-size: 13px;
+    font-weight: 550;
+    font-style: italic;
+  }
 `
 
 export default function Headlines({data}) {
@@ -112,7 +88,7 @@ export default function Headlines({data}) {
       const position_abbr = data.included.find(position => position.id == position_id).attributes.abbreviation
       // console.log({team_data})
       const Img = ({src: url, desc, cname}) => (
-        <img src={process.env.NEXT_PUBLIC_EXTERNAL_SRC + url} alt={desc} className={cname} />
+        <img src={process.env.NEXT_PUBLIC_NEWS_DOMAIN + url} alt={desc} className={cname} />
       )
       const Content = ({title, content, date}) => (
         <ContentSyles>
