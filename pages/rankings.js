@@ -11,6 +11,10 @@ const RankingPageStyles = styled.div`
   justify-content: space-between;
   max-width: 1130px;
   margin: 0 auto;
+  h2 {
+    width: 100%;
+    text-align: center;
+  }
 `
 
 const PositionStyles = styled.div`
@@ -30,10 +34,6 @@ const PositionStyles = styled.div`
   }
   li:nth-child(odd){
     background-color: lightgrey;
-    /* color: white; */
-    ::marker {
-      /* color: var(--default); */
-    }
   }
   li::marker {
     font-weight: bold;
@@ -60,12 +60,10 @@ const PositionNav = styled.nav`
     color: var(--default);
     text-decoration: none;
   }
-
 `
 
 export default function Rankings() {
-  // need to determine how to update state once / set multiple state and rerender once/batch
-  // const [week, setWeek] = useState('')
+  const [week, setWeek] = useState('')
   const [rankings, setRankings] = useState([])
   const positions = [
     'quarterbacks',
@@ -77,6 +75,7 @@ export default function Rankings() {
     // 'kickers',
   ]
   const heading = text => text.replace('-',' ').toUpperCase()
+  const loading = rankings.error ? `unable to load ${week}` : `loading`
 
   useEffect(()=>{
     const season = dayjs('2021-09-08')
@@ -97,6 +96,7 @@ export default function Rankings() {
       .then(res => res.json())
       .then(data => { 
         setRankings(data)
+        setWeek(`week ${season_week_num}`)
       })
   },[])
 
@@ -110,17 +110,20 @@ export default function Rankings() {
         </ul>
       </PositionNav> */}
       {rankings.results 
-        ? positions.map(position => {
-          const html = rankings.results.find(ranking => (
-            ranking[0].includes(heading(position))
-          ))
-          return (
-            <PositionStyles id={position} key={'ranking-' + position}>
-              {parse(html[0])}
-              {parse(html[1])}
-            </PositionStyles>
-          )}) 
-      : <p className='attention'>loading player rankings...</p>
+        ? <>
+            <h2>{week} Player Rankings</h2>
+            {positions.map(position => {
+            const html = rankings.results.find(ranking => (
+              ranking[0].includes(heading(position))
+            ))
+            return (
+              <PositionStyles id={position} key={'ranking-' + position}>
+                {parse(html[0])}
+                {parse(html[1])}
+              </PositionStyles>
+            )})}
+          </>    
+        : <p className='attention'>{loading} player rankings...</p>
       }
     </RankingPageStyles>
   )
