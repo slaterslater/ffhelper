@@ -65,6 +65,7 @@ const PositionNav = styled.nav`
 export default function Rankings() {
   const [week, setWeek] = useState('')
   const [rankings, setRankings] = useState([])
+  const [msg, setMsg] = useState('loading...')
   const positions = [
     'quarterbacks',
     'tight-ends',
@@ -75,7 +76,6 @@ export default function Rankings() {
     // 'kickers',
   ]
   const heading = text => text.replace('-',' ').toUpperCase()
-  const loading = rankings.error ? `unable to load ${week}` : `loading`
 
   useEffect(()=>{
     const season = dayjs('2021-09-08')
@@ -95,11 +95,14 @@ export default function Rankings() {
     })
       .then(res => res.json())
       .then(data => { 
+        if (rankings.error || data.results.includes(null)) {
+          setMsg(`unable to load week-${season_week_num} player rankings...`)
+          return
+        }
         setRankings(data)
         setWeek(`week ${season_week_num}`)
       })
   },[])
-
   return (
     <RankingPageStyles>
       {/* <PositionNav>
@@ -113,9 +116,9 @@ export default function Rankings() {
         ? <>
             <h2>{week} Player Rankings</h2>
             {positions.map(position => {
-            const html = rankings.results.find(ranking => (
-              ranking[0].includes(heading(position))
-            ))
+              const html = rankings.results.find(ranking => (
+                ranking[0].includes(heading(position))
+              ))
             return (
               <PositionStyles id={position} key={'ranking-' + position}>
                 {parse(html[0])}
@@ -123,7 +126,7 @@ export default function Rankings() {
               </PositionStyles>
             )})}
           </>    
-        : <p className='attention'>{loading} player rankings...</p>
+        : <p className='attention'>{msg}</p>
       }
     </RankingPageStyles>
   )
