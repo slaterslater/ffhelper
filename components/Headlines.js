@@ -62,7 +62,7 @@ const ContentSyles = styled.div`
 `
 
 export default function Headlines({data}) {
-  console.log(data)
+  // console.log(data)
   return (
     <>
     {data.data.map(item => {
@@ -104,7 +104,7 @@ export default function Headlines({data}) {
             <Img cname="logo" src={team_image_url} alt={`${team_name} logo`} />
             <div>
               <h2>{player_name}</h2>
-              <h3>{position_abbr} : {team_name}</h3>
+              <h3>{position_abbr}: {team_name}</h3>
             </div>
             <Img cname="mugshot" src={player_image_url} alt={`${player_name}`} />
           </div>

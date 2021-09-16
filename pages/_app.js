@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components"
+import Nav from "../components/Nav"
 
 const GlobalStyle = createGlobalStyle`
 :root {
@@ -48,6 +49,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <GlobalStyle />
+      <Nav />
       <Component {...pageProps} />
     </>
   )
