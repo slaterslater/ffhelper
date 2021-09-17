@@ -24,6 +24,10 @@ const HeadlineStyles = styled.div`
   }
   img {
     height: 100px;
+    /* color: #FFF; */
+  }
+  .logo {
+    width: 125px;
   }
   .mugshot {
     margin-left: auto;
@@ -31,6 +35,9 @@ const HeadlineStyles = styled.div`
   @media (max-width:450px){
     img {
       height: 65px;
+    }
+    .logo {
+      width: 82px;
     }
     #player-profile div {
       height: 65px;
@@ -87,8 +94,12 @@ export default function Headlines({data}) {
       // position
       const position_abbr = data.included.find(position => position.id == position_id).attributes.abbreviation
       // console.log({team_data})
-      const Img = ({src: url, desc, cname}) => (
-        <img src={process.env.NEXT_PUBLIC_NEWS_DOMAIN + url} alt={desc} className={cname} />
+      const Img = ({src: url, alt: desc, bg: color, cname}) => (
+        <img src={process.env.NEXT_PUBLIC_NEWS_DOMAIN + url} 
+          alt={desc} 
+          style={{color:`#${color}`, backgroundColor:`#${color}`}} 
+          className={cname} 
+        />
       )
       const Content = ({title, content, date}) => (
         <ContentSyles>
@@ -101,10 +112,10 @@ export default function Headlines({data}) {
       return (
         <HeadlineStyles key={item.id}>
           <div id="player-profile" style={{ borderColor: '#' + team_color }}>
-            <Img cname="logo" src={team_image_url} alt={`${team_name} logo`} />
+            <Img cname="logo" src={team_image_url} bg={team_color} alt={`${team_name} logo`} />
             <div>
               <h2>{player_name}</h2>
-              <h3>{position_abbr}: {team_name}</h3>
+              <h3>{position_abbr} &bull; {team_name}</h3>
             </div>
             <Img cname="mugshot" src={player_image_url} alt={`${player_name}`} />
           </div>
