@@ -6,7 +6,7 @@ export default async (req, res) => {
       const scrape = async url => {
         const response = await fetch(url)
         const htmlString = await response.text()
-        const ranking = htmlString.match(/(<h3>.*<\/h3>|<ol>.*<\/ol>)/g)
+        const ranking = htmlString?.match(/(<h3.*<\/h3>|<ol.*<\/ol>)/g)
         results.push(ranking)
       }
       Promise.all(urls.map(url => scrape(url)))

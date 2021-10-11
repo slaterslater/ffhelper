@@ -64,7 +64,7 @@ const PositionNav = styled.nav`
 
 export default function Rankings() {
   const [week, setWeek] = useState('')
-  const [rankings, setRankings] = useState([])
+  const [data, setData] = useState(null)
   const [msg, setMsg] = useState('loading...')
   const positions = [
     'quarterbacks',
@@ -75,7 +75,7 @@ export default function Rankings() {
     'flex',
     // 'kickers',
   ]
-  const heading = text => text.replace('-',' ').toUpperCase()
+  const heading = text => text.replace('-',' ').replace(/s$/,'').toUpperCase()
 
   useEffect(()=>{
     const season = dayjs('2021-09-08')
@@ -83,34 +83,6 @@ export default function Rankings() {
     const current_week_num = (now.day() < 3) ? now.week() - 1 : now.week()
     const season_week_num = current_week_num - season.week() + 1    
     const date = season.week(current_week_num).format('YYYY/MM/DD')
-
-    // const getRankingData = async urls => {
-    //   let res = await fetch('/api/player_rankings', {
-    //     method: 'post',
-    //     headers: {
-    //       'content-type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ urls }),
-    //   })
-    //   // if (!res.ok) return 'not ok'
-    //   return res.status
-      
-    // }
-
-    // let date = season.week(current_week_num).day(0).format('YYYY/MM/DD')
-    // // let url = [`${process.env.NEXT_PUBLIC_RANKING_DOMAIN}/${date}/week-${season_week_num}-rankings-${positions[0]}`]
-    // let url = ['https://www.si.com/fantasy/2021/09/16/week-3-rankings-quarterbacks']
-    // // console.log(date)
-
-    // // while (!found) {
-    //   try {
-    //     getRankingData(url).then(msg => console.log('STATUS' , msg))
-    //   } catch (e) {
-    //     console.log(e)
-    //   }
-
-    // }
-
     const urls = positions.map(position => (
       `${process.env.NEXT_PUBLIC_RANKING_DOMAIN}/${date}/week-${season_week_num}-rankings-${position}`)
     )
@@ -123,37 +95,32 @@ export default function Rankings() {
       body: JSON.stringify({ urls }),
     })
       .then(res => res.json())
-      .then(data => { 
-        if (rankings.error || data.results.includes(null)) {
-          setMsg(`unable to load Week ${season_week_num} player rankings...`)
+      .then(json => { 
+        if (json.error || json.results.includes(null)) {
+          setMsg(`Week ${season_week_num} player rankings unavailable at this time`)
           return
         }
-        setRankings(data)
+        setData(json.results)
         setWeek(`week ${season_week_num}`)
       })
   },[])
+
   return (
     <RankingPageStyles>
-      {/* <PositionNav>
-        <ul>
-          {positions.map(position => (
-            <li key={'nav' + position}><a href={'#' + position}>{heading(position)}</a></li>
-          ))}
-        </ul>
-      </PositionNav> */}
-      {rankings.results 
+      {data 
         ? <>
             <h2>{week} Player Rankings</h2>
             {positions.map(position => {
-              const html = rankings.results.find(ranking => (
-                ranking[0].includes(heading(position))
-              ))
-            return (
-              <PositionStyles id={position} key={'ranking-' + position}>
-                {parse(html[0])}
-                {parse(html[1])}
-              </PositionStyles>
-            )})}
+              const html = data.find(arr => {
+                if (arr.some(elem => elem.includes(heading(position)))) return arr
+              })
+              return (
+                <PositionStyles id={position} key={'ranking-' + position}>
+                  {parse(html[0])}
+                  {parse(html[1])}
+                </PositionStyles>
+              )
+            })}
           </>    
         : <p className='attention'>{msg}</p>
       }
