@@ -38,7 +38,7 @@ const PositionStyles = styled.div`
   li::marker {
     font-weight: bold;
   }
-  li:nth-of-type(1n+51) {
+  li:nth-of-type(1n+29) {
     display: none;
 } 
 `
