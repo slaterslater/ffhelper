@@ -112,7 +112,7 @@ export default function Rankings() {
             <h2>{week} Player Rankings</h2>
             {positions.map(position => {
               const html = data.find(arr => {
-                if (arr.some(elem => elem.includes(heading(position)))) return arr
+                return arr.some(elem => elem.includes(heading(position)))
               })
               return (
                 <PositionStyles id={position} key={'ranking-' + position}>
