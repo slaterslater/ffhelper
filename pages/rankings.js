@@ -38,34 +38,33 @@ const PositionStyles = styled.div`
   li::marker {
     font-weight: bold;
   }
-  li:nth-of-type(1n+29) {
+  /* li:nth-of-type(1n+29) { */
+  li:nth-of-type(1n+${props => props.listLen}) {
     display: none;
-} 
+  } 
 `
 
-const PositionNav = styled.nav`
-  width:100%;
-  ul {
-    display: flex;
-    justify-content: space-evenly;
-    margin:0;
-    padding:0;
-    list-style-type: none;
+// const PositionNav = styled.nav`
+//   width:100%;
+//   ul {
+//     display: flex;
+//     justify-content: space-evenly;
+//     margin:0;
+//     padding:0;
+//     list-style-type: none;
     
-  }
-  li {
-
-  }
-  a {
-    color: var(--default);
-    text-decoration: none;
-  }
-`
+//   }
+//   a {
+//     color: var(--default);
+//     text-decoration: none;
+//   }
+// `
 
 export default function Rankings() {
   const [week, setWeek] = useState('')
   const [data, setData] = useState(null)
   const [msg, setMsg] = useState('loading...')
+  const [len, setLen] = useState(0)
   const positions = [
     'quarterbacks',
     'tight-ends',
@@ -86,7 +85,7 @@ export default function Rankings() {
     const urls = positions.map(position => (
       `${process.env.NEXT_PUBLIC_RANKING_DOMAIN}/${date}/week-${season_week_num}-rankings-${position}`)
     )
-    console.log(urls)
+    // console.log(urls)
     fetch('/api/player_rankings', {
       method: 'post',
       headers: {
@@ -100,10 +99,18 @@ export default function Rankings() {
           setMsg(`Week ${season_week_num} player rankings unavailable at this time`)
           return
         }
+        // find the fewest number of <li> and setLen
+        const max_list_length = json.results.reduce((max, rank) => {
+          max = Math.min(max, rank[1].match(/<\/li>/g).length);
+          return max
+        },100)
+        setLen(max_list_length + 1)
         setData(json.results)
         setWeek(`week ${season_week_num}`)
       })
   },[])
+
+  console.log(len)
 
   return (
     <RankingPageStyles>
@@ -115,7 +122,7 @@ export default function Rankings() {
                 return arr.some(elem => elem.includes(heading(position)))
               })
               return (
-                <PositionStyles id={position} key={'ranking-' + position}>
+                <PositionStyles id={position} key={'ranking-' + position} listLen={len}>
                   {parse(html[0])}
                   {parse(html[1])}
                 </PositionStyles>
