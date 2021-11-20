@@ -83,7 +83,7 @@ export default function Rankings() {
     const season_week_num = current_week_num - season.week() + 1    
     const date = season.week(current_week_num).format('YYYY/MM/DD')
     const urls = positions.map(position => (
-      `${process.env.NEXT_PUBLIC_RANKING_DOMAIN}/${date}/week-${season_week_num}-rankings-${position}`)
+      `${process.env.NEXT_PUBLIC_RANKING_DOMAIN}/${date}/week-${season_week_num}-football-rankings-${position}`)
     )
     // console.log(urls)
     fetch('/api/player_rankings', {
