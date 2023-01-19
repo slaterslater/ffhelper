@@ -69,7 +69,6 @@ const ContentSyles = styled.div`
 `
 
 export default function Headlines({data}) {
-  // console.log(data)
   return (
     <>
     {data.data.map(item => {
@@ -93,7 +92,6 @@ export default function Headlines({data}) {
       const team_image_url = data.included.find(image => image.id == team_image_id).attributes.uri.url
       // position
       const position_abbr = data.included.find(position => position.id == position_id).attributes.abbreviation
-      // console.log({team_data})
       const Img = ({src: url, alt: desc, bg: color, cname}) => (
         <img src={process.env.NEXT_PUBLIC_NEWS_DOMAIN + url} 
           alt={desc} 
@@ -105,7 +103,6 @@ export default function Headlines({data}) {
         <ContentSyles>
           <div className="title">{parse(title.processed)}</div>
           <div className="content">{content && parse(content.processed)}</div>
-          {/* <div className="date">{dayjs(date).format('MMM DD, h:mm A')}</div> */}
         </ContentSyles>
       )
 

@@ -49,7 +49,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <GlobalStyle />
-      <Nav />
+      {/* <Nav /> */}
       <Component {...pageProps} />
     </>
   )
