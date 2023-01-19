@@ -9,7 +9,6 @@ export default function Home() {
     const fetcher = (url) => fetch(url).then((r) => r.json())
     const API = process.env.NEXT_PUBLIC_API
     const { data: news, error } = useSWR(API, fetcher)
-    console.log({news})
     if (error) return <p className='attention'>failed to load headlines...</p>
     if (!news) return <p className='attention'>loading headlines...</p>
     return <Headlines data={news} />
