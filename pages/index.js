@@ -18,7 +18,7 @@ const PlayerNews = ({source}) => {
 }
 
 export default function Home() {
-  const [source, setSource] = useState(sourceJays)
+  const [source, setSource] = useState(sourceNFL)
   
   return (
     <>
