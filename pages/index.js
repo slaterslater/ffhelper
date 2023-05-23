@@ -2,18 +2,24 @@ import Head from 'next/head'
 import useSWR from 'swr'
 import Headlines from '../components/Headlines';
 import Footer from '../components/Footer';
+import { useState } from 'react';
+import Nav from '../components/Nav';
+import Link from 'next/link';
+
+const sourceNFL = process.env.NEXT_PUBLIC_NFL
+const sourceJays = process.env.NEXT_PUBLIC_JAYS
+
+const PlayerNews = ({source}) => {
+  const fetcher = (url) => fetch(url).then((r) => r.json())
+  const { data: news, error } = useSWR(source, fetcher)
+  if (error) return <p className='attention'>failed to load headlines...</p>
+  if (!news) return <p className='attention'>loading headlines...</p>
+  return <Headlines data={news} />
+}
 
 export default function Home() {
-
-  const PlayerNews = () => {
-    const fetcher = (url) => fetch(url).then((r) => r.json())
-    const API = process.env.NEXT_PUBLIC_API
-    const { data: news, error } = useSWR(API, fetcher)
-    if (error) return <p className='attention'>failed to load headlines...</p>
-    if (!news) return <p className='attention'>loading headlines...</p>
-    return <Headlines data={news} />
-  }
-
+  const [source, setSource] = useState(sourceJays)
+  
   return (
     <>
       <Head>
@@ -22,9 +28,15 @@ export default function Home() {
         <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" /> 
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Nav>
+        <ul>
+          <li><Link href="/" onClick={() => setSource(sourceNFL)}>NFL Headlines</Link></li>
+          <li><Link href="/" onClick={() => setSource(sourceJays)}>Jays Headlines</Link></li>
+        </ul>
+      </Nav>
       <main style={{padding:'5px'}}>
         <h1 style={{position:'absolute', left:'-999em'}}>Football Headlines</h1>
-        <PlayerNews />
+        <PlayerNews source={source} />
       </main>
       <Footer />
     </>

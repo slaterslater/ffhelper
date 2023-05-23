@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const NavStyles = styled.nav`
   ul {
     max-width: 1000px;
-    padding: 0;
+    padding: 10px 0;
     margin: 0 auto;
     list-style-type: none;
     display:flex;
@@ -18,12 +18,13 @@ const NavStyles = styled.nav`
   }
 `
 
-const Nav = () => (
+const Nav = ({children}) => (
   <NavStyles>
-    <ul>
-    <li><Link href="/"><a>News Headlines</a></Link></li>
-    <li><Link href="/rankings"><a>Player Rankings</a></Link></li>
-    </ul>
+    {/* <ul>
+    <li><Link href="/">News Headlines</Link></li>
+    <li><Link href="/rankings">Player Rankings</Link></li>
+    </ul> */}
+    {children}
   </NavStyles>
 )
 
